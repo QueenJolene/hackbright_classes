@@ -1,6 +1,7 @@
 """This file should have our melon-type classes in it."""
 
 class AbstractMelon(object):
+
     def __init__(self):
         try:
             raise TypeError("You can not make an instance from this class. Please use a specific melon type.")
@@ -9,6 +10,19 @@ class AbstractMelon(object):
 
     def get_base_price(self):
         return 5.00
+
+    def get_price(self, qty, is_imported, shape):
+        base_price = self.get_base_price()
+        if is_imported == True:
+            base_price = self.get_base_price() * 1.5
+            if shape not in "natural":
+                base_price = base_price * 2
+        else:
+            base_price = self.get_base_price()
+            if shape not in "natural":
+                base_price = base_price * 2
+
+        return base_price * qty
 
 
 class Watermelon(AbstractMelon):
@@ -22,12 +36,12 @@ class Watermelon(AbstractMelon):
         pass
 
     def get_price(self, qty):
-        
-        if qty >= 3:
-            base_price = self.get_base_price() * qty * 0.75
-            return base_price
-        else:        
-            return self.get_base_price() * qty
+        # if qty >= 3:
+        #     base_price = self.get_base_price() * qty * 0.75
+        #     return base_price
+        # else:        
+        #     return self.get_base_price() * qty
+        print super(Watermelon, self).get_price(self, qty, self.is_imported, self.shape)
 
 
 class Cantaloupe(AbstractMelon):
