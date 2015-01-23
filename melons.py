@@ -1,21 +1,36 @@
 """This file should have our melon-type classes in it."""
 
-class Watermelon(object):
+class AbstractMelon(object):
+    def __init__(self):
+        try:
+            raise TypeError("You can not make an instance from this class. Please use a specific melon type.")
+        except TypeError,e:
+            print e
+
+    def get_base_price(self):
+        return 5.00
+
+
+class Watermelon(AbstractMelon):
     name = "Watermelon"
     color = "green"
     is_imported = False
     shape = "natural"
     seasons = ["Fall", "Summer"]
 
+    def __init__(self):
+        pass
+
     def get_price(self, qty):
-        base_price = 5.00
-        if qty >= 3:
-            base_price = base_price * qty * 0.75
         
-        return base_price
+        if qty >= 3:
+            base_price = self.get_base_price() * qty * 0.75
+            return base_price
+        else:        
+            return self.get_base_price() * qty
 
 
-class Cantaloupe(object):
+class Cantaloupe(AbstractMelon):
     name = "Cantaloupe"
     color = "tan"
     is_imported = False
@@ -24,12 +39,12 @@ class Cantaloupe(object):
 
     def get_price(self, qty):
         if qty >= 5:
-            return 2.50 * qty
+            return self.get_base_price() * 0.5 * qty
         else:
-            return 5.00 * qty
+            return self.get_base_price() * qty
         
 
-class Casaba(object):
+class Casaba(AbstractMelon):
     name = "Casaba"
     color = "green"
     is_imported = True
@@ -37,12 +52,9 @@ class Casaba(object):
     seasons = ["Spring", "Fall", "Summer", "Winter"]
 
     def get_price(self, qty):
-        base_price = 6.00
-        price = base_price * 1.5 * qty
-        
-        return price
+        return (self.get_base_price() + 1) * 1.5 * qty
 
-class Sharlyn(object):
+class Sharlyn(AbstractMelon):
     name = "Sharlyn"
     color = "tan"
     is_imported = True
@@ -50,10 +62,10 @@ class Sharlyn(object):
     seasons = ["Summer"]
 
     def get_price(self, qty):
-        return 5.00 * 1.5 * qty
+        return self.get_base_price() * 1.5 * qty
 
 
-class SantaClaus(object):
+class SantaClaus(AbstractMelon):
     name = "Santa Claus"
     color = "green"
     is_imported = True
@@ -61,12 +73,10 @@ class SantaClaus(object):
     seasons = ["Spring","Winter"]
 
     def get_price(self, qty):
-        base_price = 5.00
-        price = base_price* qty * 1.5
-        return price 
+        return self.get_base_price() * qty * 1.5
 
 
-class Christmas(object):
+class Christmas(AbstractMelon):
     name = "Christmas"
     color = "green"
     is_imported = False
@@ -74,22 +84,20 @@ class Christmas(object):
     seasons = ["Winter"]
 
     def get_price(self, qty):
-        return 5.00 * qty
+        return self.get_base_price() * qty
 
 
-class HornedMelon(object):
-    name = "Horned Melon"
+class HornedMelon(AbstractMelon):
+    name = "Horned AbstractMelon"
     color = "yellow"
     is_imported = True
     shape = "natural"
     seasons = ["Summer"]
 
     def get_price(self, qty):
-        base_price = 5.00
-        price = base_price * 1.5 * qty
-        return price
+        return self.get_base_price() * 1.5 * qty
 
-class Xigua(object):
+class Xigua(AbstractMelon):
     name = "Xigua"
     color = "black"
     is_imported = True
@@ -97,9 +105,9 @@ class Xigua(object):
     seasons = ["Summer"]
 
     def get_price(self, qty):
-        return 1.5 * 5.00 * 2 * qty
+        return 1.5 * self.base_price() * 2 * qty
 
-class Ogens(object):
+class Ogens(AbstractMelon):
 
     name = "Ogen"
     color = "tan"
@@ -108,7 +116,4 @@ class Ogens(object):
     seasons = ["Spring", "Summer"]
 
     def get_price(self, qty):
-        base_price = 6.00
-        return base_price * qty
-
-
+        return (self.get_base_price() + 1) * qty
