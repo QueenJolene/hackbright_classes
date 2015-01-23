@@ -1,5 +1,9 @@
 """This file should have our melon-type classes in it."""
 
+
+#left off with Casaba Melons, need to figure out why it is still muliplying original price and not 
+# rebound price.
+
 class AbstractMelon(object):
 
     def __init__(self):
@@ -11,14 +15,20 @@ class AbstractMelon(object):
     def get_base_price(self):
         return 5.00
 
-    def get_price(self, qty, is_imported, shape):
+    def get_price(self, qty, is_imported, shape, add_on = False):
         base_price = self.get_base_price()
+        if add_on == True:
+            base_price = base_price + 1
+
         if is_imported == True:
-            base_price = self.get_base_price() * 1.5
+            base_price = base_price * 1.5
+
             if shape not in "natural":
                 base_price = base_price * 2
+
         else:
             base_price = self.get_base_price()
+
             if shape not in "natural":
                 base_price = base_price * 2
 
@@ -36,12 +46,11 @@ class Watermelon(AbstractMelon):
         pass
 
     def get_price(self, qty):
-        # if qty >= 3:
-        #     base_price = self.get_base_price() * qty * 0.75
-        #     return base_price
-        # else:        
-        #     return self.get_base_price() * qty
-        print super(Watermelon, self).get_price(self, qty, self.is_imported, self.shape)
+        base_price = super(Watermelon, self).get_price(qty, self.is_imported, self.shape)
+        if qty >= 3:
+            return base_price * 0.75
+        else:        
+            return base_price
 
 
 class Cantaloupe(AbstractMelon):
@@ -51,11 +60,15 @@ class Cantaloupe(AbstractMelon):
     shape = "natural"
     seasons = ["Summer", "Spring"]
 
+    def __init__(self):
+        pass
+
     def get_price(self, qty):
+        base_price = super(Cataloupe, self).get_price(qty, self.is_imported, self.shape)
         if qty >= 5:
-            return self.get_base_price() * 0.5 * qty
+            return base_price * 0.5
         else:
-            return self.get_base_price() * qty
+            return base_price
         
 
 class Casaba(AbstractMelon):
@@ -64,9 +77,14 @@ class Casaba(AbstractMelon):
     is_imported = True
     shape = "natural"
     seasons = ["Spring", "Fall", "Summer", "Winter"]
+    add_on = True
+    
+    def __init__(self):
+        pass
 
     def get_price(self, qty):
-        return (self.get_base_price() + 1) * 1.5 * qty
+        base_price = super(Casaba, self).get_price(qty, self.is_imported, self.shape)
+        return base_price
 
 class Sharlyn(AbstractMelon):
     name = "Sharlyn"
@@ -74,6 +92,9 @@ class Sharlyn(AbstractMelon):
     is_imported = True
     shape = "natural"
     seasons = ["Summer"]
+
+    def __init__(self):
+        pass
 
     def get_price(self, qty):
         return self.get_base_price() * 1.5 * qty
@@ -86,6 +107,9 @@ class SantaClaus(AbstractMelon):
     shape = "natural"
     seasons = ["Spring","Winter"]
 
+    def __init__(self):
+        pass
+
     def get_price(self, qty):
         return self.get_base_price() * qty * 1.5
 
@@ -96,6 +120,9 @@ class Christmas(AbstractMelon):
     is_imported = False
     shape = "natural"
     seasons = ["Winter"]
+
+    def __init__(self):
+        pass
 
     def get_price(self, qty):
         return self.get_base_price() * qty
@@ -108,6 +135,9 @@ class HornedMelon(AbstractMelon):
     shape = "natural"
     seasons = ["Summer"]
 
+    def __init__(self):
+        pass
+
     def get_price(self, qty):
         return self.get_base_price() * 1.5 * qty
 
@@ -117,6 +147,9 @@ class Xigua(AbstractMelon):
     is_imported = True
     shape = "square"
     seasons = ["Summer"]
+
+    def __init__(self):
+        pass
 
     def get_price(self, qty):
         return 1.5 * self.base_price() * 2 * qty
@@ -128,6 +161,9 @@ class Ogens(AbstractMelon):
     is_imported = False
     shape = "natural"
     seasons = ["Spring", "Summer"]
+
+    def __init__(self):
+        pass
 
     def get_price(self, qty):
         return (self.get_base_price() + 1) * qty
